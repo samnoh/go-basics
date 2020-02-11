@@ -67,7 +67,7 @@ func main() {
 	d := &c
 	c = 5
 	*d = 20
-	fmt.Println(c, &c, d, &d, *d) // 5 0xc000018108 0xc000018108 0xc00000e030 5
+	fmt.Println(c, &c, d, &d, *d) // 20 0xc000018108 0xc000018108 0xc00000e030 20
 
 	// arrays
 	names := [5]string{"h", "e", "l", "l"}
