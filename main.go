@@ -1,9 +1,11 @@
 package main
 
-// import (
-// 	"fmt"
-// 	"strings"
-// )
+import (
+	"fmt"
+
+	"github.com/samnoh/learngo/accounts"
+	"github.com/samnoh/learngo/mydict"
+)
 
 // func multiply(a int, b int) int {
 // 	return a + b
@@ -88,12 +90,6 @@ package main
 // 	fmt.Println(sam)
 // }
 
-import (
-	"fmt"
-
-	"github.com/samnoh/learngo/accounts"
-)
-
 func main() {
 	account := accounts.NewAccount("sam")
 	account.Deposit(10)
@@ -103,4 +99,17 @@ func main() {
 	// 	log.Fatalln(err) // shut down program immediately
 	// }
 	fmt.Println(account)
+
+	dictionary := mydict.Dictionary{"first": "first word"}
+
+	err := dictionary.Add("Hello", "Greetings")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defintion, err := dictionary.Search("Hello")
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(defintion)
+	}
 }
