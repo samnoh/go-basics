@@ -13,7 +13,7 @@ type Account struct {
 
 var errNoMoney = errors.New("Can't withdraw")
 
-// Construct
+// Constructor
 // NewAccount creates Account
 func NewAccount(owner string) *Account {
 	account := Account{owner: owner, balance: 0}

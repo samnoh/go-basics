@@ -106,6 +106,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	defintion, err := dictionary.Search("Hello")
 	if err != nil {
 		fmt.Println(err)
