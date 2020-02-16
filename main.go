@@ -32,6 +32,8 @@ func main() {
 		go hitUrl(url, c)
 	}
 
+	fmt.Println("Waiting...")
+
 	for i := 0; i < len(urls); i++ {
 		result := <-c
 		results[result.url] = result.status
