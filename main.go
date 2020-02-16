@@ -100,17 +100,26 @@ func main() {
 	// }
 	fmt.Println(account)
 
-	dictionary := mydict.Dictionary{"first": "first word"}
+	dictionary := mydict.Dictionary{}
 
-	err := dictionary.Add("Hello", "Greetings")
+	baseWord := "Hello"
+
+	err := dictionary.Add(baseWord, "Greetings")
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	defintion, err := dictionary.Search("Hello")
+	defintion, err := dictionary.Search(baseWord)
 	if err != nil {
 		fmt.Println(err)
 	} else {
 		fmt.Println(defintion)
 	}
+
+	err2 := dictionary.Update(baseWord, "Bye")
+	if err2 != nil {
+		fmt.Println(err2)
+	}
+	word, _ := dictionary.Search(baseWord)
+	fmt.Println(word)
 }
