@@ -6,22 +6,17 @@ import (
 	"net/http"
 )
 
-var (
-	errRequestFailed = errors.New("Request failed")
-)
+var errRequestFailed = errors.New("Request failed")
 
-func hitUrl(url string) error {
-	fmt.Println("Checking:", url)
-	res, err := http.Get(url)
-	if err != nil || res.StatusCode >= 400 {
-		fmt.Println(res.StatusCode)
-		return errRequestFailed
-	}
-	return nil
+type response struct {
+	url    string
+	status string
 }
 
 func main() {
-	var results = make(map[string]string)
+	results := make(map[string]string)
+	c := make(chan response)
+
 	urls := []string{
 		"https://www.airbnb.com/",
 		"https://www.google.com/",
@@ -32,16 +27,27 @@ func main() {
 		"https://www.facebook.com/",
 		"https://www.instagram.com/",
 	}
-	for _, url := range urls {
-		result := "OK"
-		err := hitUrl(url)
 
-		if err != nil {
-			result = "FAILED"
-		}
-		results[url] = result
+	for _, url := range urls {
+		go hitUrl(url, c)
 	}
-	for url, result := range results {
-		fmt.Println(url, result)
+
+	for i := 0; i < len(urls); i++ {
+		result := <-c
+		results[result.url] = result.status
 	}
+
+	for url, status := range results {
+		fmt.Println(url, status)
+	}
+}
+
+// c chan<-: c is a send-only channel (you cannot <- c)
+func hitUrl(url string, c chan<- response) {
+	res, err := http.Get(url)
+	status := "OK"
+	if err != nil || res.StatusCode >= 400 {
+		status = "FAIELD"
+	}
+	c <- response{url: url, status: status}
 }
